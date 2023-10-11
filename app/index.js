@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,6 +12,11 @@ import { Image } from "react-native";
 import { Path, Svg } from "react-native-svg";
 import { coins } from "../assets/data";
 import { router } from "expo-router";
+import Animated, {
+  BounceIn,
+  SlideInLeft,
+  ZoomIn,
+} from "react-native-reanimated";
 
 const app = () => {
   function addCommas(number) {
@@ -35,21 +41,22 @@ const app = () => {
       <View
         style={{
           alignSelf: "center",
-          margin: 15,
+          margin: 20,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <View
+        <Animated.View
+          resizeMode="cover"
+          entering={ZoomIn}
+          // source={require("../assets/images/onBlack-pattern-front.png")}
           style={{
             height: 180,
             width: Dimensions.get("window").width * 0.9,
             backgroundColor: "#1d1d1d",
             margin: 13,
             alignContent: "center",
-            borderRadius: 19,
-            // marginLeft:  === 0 ? 15 : 10,
-            // justifyContent: "center",
+            borderRadius: 20,
             opacity: 0.9,
             padding: 10,
           }}
@@ -169,7 +176,7 @@ const app = () => {
               </Svg>
             </TouchableOpacity>
           </View>
-        </View>
+        </Animated.View>
       </View>
       {/* Portfolio */}
       <Text
@@ -181,7 +188,7 @@ const app = () => {
           marginLeft: 25,
         }}
       >
-        Assets
+        My Assets
       </Text>
       <FlatList
         data={coins}

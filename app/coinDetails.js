@@ -48,8 +48,8 @@ const coinDetails = () => {
         </Text>
       </View>
 
-      {/* <View>
-        <LineChart
+      <View>
+        {/* <LineChart
           data={{
             labels: ["January", "February", "March", "April", "May", "June"],
             datasets: [
@@ -65,7 +65,7 @@ const coinDetails = () => {
               },
             ],
           }}
-          width={Dimensions.get("window").width} // from react-native
+          width={Dimensions.get("window").width * 0.8} // from react-native
           height={220}
           yAxisLabel="$"
           yAxisSuffix="k"
@@ -90,9 +90,10 @@ const coinDetails = () => {
           style={{
             marginVertical: 8,
             borderRadius: 16,
+            width: Dimensions.get("screen").width * 0.8,
           }}
-        />
-      </View> */}
+        /> */}
+      </View>
     </View>
   );
 };

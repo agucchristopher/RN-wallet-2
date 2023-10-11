@@ -9,24 +9,24 @@ export default () => {
     RRegular: require("../assets/fonts/Raleway-Regular.ttf"),
     SRegular: require("../assets/fonts/Ubuntu-Medium.ttf"),
   });
-  // if (!fontsLoaded) {
-  //   return (
-  //     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-  //       <LottieView
-  //         resizeMode="contain"
-  //         autoPlay
-  //         style={{
-  //           width: 150,
-  //           height: 150,
-  //           alignSelf: "center",
-  //           justifyContent: "center",
-  //         }}
-  //         // Find more Lottie files at https://lottiefiles.com/featured
-  //         source={require("../assets/animation_lnlqmxc0.json")}
-  //       />
-  //     </View>
-  //   );
-  // }
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <LottieView
+          resizeMode="contain"
+          autoPlay
+          style={{
+            width: 150,
+            height: 150,
+            alignSelf: "center",
+            justifyContent: "center",
+          }}
+          // Find more Lottie files at https://lottiefiles.com/featured
+          source={require("../assets/animation_lnlqmxc0.json")}
+        />
+      </View>
+    );
+  }
   return (
     <Stack
       screenOptions={{
@@ -35,7 +35,10 @@ export default () => {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="coinDetails" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="coinDetails"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
     </Stack>
   );
 };
