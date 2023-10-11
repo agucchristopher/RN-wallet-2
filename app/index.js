@@ -26,7 +26,7 @@ const app = () => {
           fontFamily: "RRegular",
           display: "flex",
           alignSelf: "center",
-          margin: 30,
+          margin: 20,
           marginBottom: 10,
         }}
       >
@@ -42,7 +42,7 @@ const app = () => {
       >
         <View
           style={{
-            height: 200,
+            height: 180,
             width: Dimensions.get("window").width * 0.9,
             backgroundColor: "#1d1d1d",
             margin: 13,
@@ -51,7 +51,7 @@ const app = () => {
             // marginLeft:  === 0 ? 15 : 10,
             // justifyContent: "center",
             opacity: 0.9,
-            padding: 15,
+            padding: 10,
           }}
         >
           <Text
@@ -68,10 +68,10 @@ const app = () => {
 
           <Text
             style={{
-              fontSize: 35,
+              fontSize: 30,
               color: "white",
               fontFamily: "SRegular",
-              margin: 15,
+              margin: 5,
               marginTop: 5,
               textAlign: "center",
             }}
@@ -194,7 +194,9 @@ const app = () => {
                 margin: 15,
                 justifyContent: "space-between",
               }}
-              onPress={() => router.push("/coinDetails")}
+              onPress={() =>
+                router.push({ pathname: "/coinDetails", params: item })
+              }
             >
               <View style={{ flexDirection: "row", gap: 5 }}>
                 <Image

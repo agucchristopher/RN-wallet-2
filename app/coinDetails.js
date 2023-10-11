@@ -10,8 +10,10 @@ import {
 } from "react-native-chart-kit";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Path, Svg } from "react-native-svg";
+import { router, useSearchParams, useLocalSearchParams } from "expo-router";
 
 const coinDetails = () => {
+  let params = useLocalSearchParams();
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", gap: 15, margin: 10 }}>
@@ -22,10 +24,11 @@ const coinDetails = () => {
             backgroundColor: "#1d1d1d",
             borderRadius: 15,
           }}
+          onPress={() => router.back()}
         >
           <Image
             source={{
-              uri: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+              uri: params.image,
             }}
           />
           <Svg
@@ -41,11 +44,11 @@ const coinDetails = () => {
           </Svg>
         </TouchableOpacity>
         <Text style={{ color: "white", fontFamily: "RRegular", fontSize: 25 }}>
-          Bitcoin
+          {params.name}
         </Text>
       </View>
 
-      <View>
+      {/* <View>
         <LineChart
           data={{
             labels: ["January", "February", "March", "April", "May", "June"],
@@ -89,7 +92,7 @@ const coinDetails = () => {
             borderRadius: 16,
           }}
         />
-      </View>
+      </View> */}
     </View>
   );
 };
