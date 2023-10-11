@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import LottieView from "lottie-react-native";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Dimensions, View } from "react-native";
 export default () => {
   const [fontsLoaded] = useFonts({
     RBold: require("../assets/fonts/Raleway-Bold.ttf"),
@@ -11,16 +11,20 @@ export default () => {
   });
   if (!fontsLoaded) {
     return (
-      <LottieView
-        autoPlay
-        style={{
-          width: 200,
-          height: 200,
-          backgroundColor: "#eee",
-        }}
-        // Find more Lottie files at https://lottiefiles.com/featured
-        source={require("../assets/animation_lnlqmxc0.json")}
-      />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <LottieView
+          resizeMode="contain"
+          autoPlay
+          style={{
+            width: 150,
+            height: 150,
+            alignSelf: "center",
+            justifyContent: "center",
+          }}
+          // Find more Lottie files at https://lottiefiles.com/featured
+          source={require("../assets/animation_lnlqmxc0.json")}
+        />
+      </View>
     );
   }
   return (
@@ -30,6 +34,7 @@ export default () => {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="coinDetails" options={{ headerShown: false }} />
     </Stack>
   );
 };

@@ -10,6 +10,7 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { Image } from "react-native";
 import { Path, Svg } from "react-native-svg";
 import { coins } from "../assets/data";
+import { router } from "expo-router";
 
 const app = () => {
   function addCommas(number) {
@@ -193,6 +194,7 @@ const app = () => {
                 margin: 15,
                 justifyContent: "space-between",
               }}
+              onPress={() => router.push("/coinDetails")}
             >
               <View style={{ flexDirection: "row", gap: 5 }}>
                 <Image
