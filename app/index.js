@@ -39,50 +39,18 @@ const app = () => {
           justifyContent: "center",
         }}
       >
-        {/* <FlatList
-          horizontal={true}
-          data={["on-boarding-1.png", "on-boarding-2.png", "on-boarding-3.png"]}
-          renderItem={({ item, index }) => {
-            let image = `../assets/images/` + item;
-            // console.log(item);
-            return (
-              <View
-                style={{
-                  height: 350,
-                  width: 250,
-                  backgroundColor: "#1d1d1d",
-                  margin: 15,
-                  alignContent: "flex-start",
-                  borderRadius: 19,
-                  marginLeft: index === 0 ? 15 : 10,
-                  justifyContent: "center",
-                  opacity: 0.9,
-                }}
-              >
-                <Image
-                  source={require(`../assets/images/on-boarding-1.png`)}
-                  style={{
-                    height: 250,
-                    width: Dimensions.get("window").width * 0.6,
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
-            );
-          }}
-        /> */}
         <View
           style={{
             height: 200,
             width: Dimensions.get("window").width * 0.9,
             backgroundColor: "#1d1d1d",
-            margin: 10,
-            alignContent: "flex-start",
+            margin: 13,
+            alignContent: "center",
             borderRadius: 19,
             // marginLeft:  === 0 ? 15 : 10,
             // justifyContent: "center",
             opacity: 0.9,
-            padding: 10,
+            padding: 15,
           }}
         >
           <Text
@@ -91,6 +59,7 @@ const app = () => {
               color: "white",
               fontFamily: "RMedium",
               margin: 5,
+              textAlign: "center",
             }}
           >
             Total Balance
@@ -101,7 +70,9 @@ const app = () => {
               fontSize: 35,
               color: "white",
               fontFamily: "SRegular",
-              margin: 5,
+              margin: 15,
+              marginTop: 5,
+              textAlign: "center",
             }}
           >
             $501,200.52
@@ -200,6 +171,17 @@ const app = () => {
         </View>
       </View>
       {/* Portfolio */}
+      <Text
+        style={{
+          fontSize: 30,
+          color: "white",
+          fontFamily: "RRegular",
+          margin: 10,
+          marginLeft: 25,
+        }}
+      >
+        My Coins
+      </Text>
       <FlatList
         data={coins}
         renderItem={({ item }) => {
@@ -259,7 +241,7 @@ const app = () => {
                     fontSize: 18,
                   }}
                 >
-                  ${addCommas(`${item.current_price * 3}`)}
+                  ${addCommas(`${Math.floor(item.current_price) * 3}`)}
                 </Text>
               </View>
             </TouchableOpacity>
