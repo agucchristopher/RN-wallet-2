@@ -6,6 +6,7 @@ export default () => {
     RBold: require("../assets/fonts/Raleway-Bold.ttf"),
     RMedium: require("../assets/fonts/Raleway-Medium.ttf"),
     RRegular: require("../assets/fonts/Raleway-Regular.ttf"),
+    SRegular: require("../assets/fonts/Ubuntu-Medium.ttf"),
   });
   if (!fontsLoaded) {
     return <ActivityIndicator />;
