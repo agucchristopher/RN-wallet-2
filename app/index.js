@@ -181,7 +181,7 @@ const app = () => {
           marginLeft: 25,
         }}
       >
-        My Coins
+        Assets
       </Text>
       <FlatList
         data={coins}
