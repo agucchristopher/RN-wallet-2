@@ -1,19 +1,64 @@
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Path, Svg } from "react-native-svg";
+import { LineChart } from "react-native-wagmi-charts";
+// import { LineChart } from "react-native-chart-kit";
 import { router, useSearchParams, useLocalSearchParams } from "expo-router";
 
 const coinDetails = () => {
+  const data = [
+    {
+      timestamp: 1625945400000,
+      open: 33575.25,
+      high: 33600.52,
+      low: 33475.12,
+      close: 33520.11,
+    },
+    {
+      timestamp: 1625946300000,
+      open: 33545.25,
+      high: 33560.52,
+      low: 33510.12,
+      close: 33520.11,
+    },
+    {
+      timestamp: 1625947200000,
+      open: 33510.25,
+      high: 33515.52,
+      low: 33250.12,
+      close: 33250.11,
+    },
+    {
+      timestamp: 1625948100000,
+      open: 33215.25,
+      high: 33430.52,
+      low: 33215.12,
+      close: 33420.11,
+    },
+  ];
+
+  const [chartData, setChartData] = React.useState(null);
   let params = useLocalSearchParams();
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${params.name}&vs_currencies=usd`
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData().then((data) => {
+      setChartData(data); // Assuming data structure matches what your LineChart expects
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", gap: 15, margin: 10 }}>
@@ -26,11 +71,6 @@ const coinDetails = () => {
           }}
           onPress={() => router.back()}
         >
-          <Image
-            source={{
-              uri: params.image,
-            }}
-          />
           <Svg
             height={45}
             width={45}
@@ -43,11 +83,30 @@ const coinDetails = () => {
             ></Path>
           </Svg>
         </TouchableOpacity>
+        <Image
+          source={{
+            uri: params.image,
+          }}
+          height={50}
+          width={50}
+        />
         <Text style={{ color: "white", fontFamily: "RRegular", fontSize: 25 }}>
           {params.name}
         </Text>
+        <View style={{ justifyContent: "center", alignSelf: "flex-end" }}>
+          <Text style={{ color: "white" }}>Love</Text>
+        </View>
       </View>
 
+      <View>
+        <Text style={{ color: "white" }}>${3 * params.current_price}</Text>
+        <LineChart.Provider data={da}>
+          <LineChart>
+            <LineChart.Path />
+            <LineChart.CursorLine />
+          </LineChart>
+        </LineChart.Provider>
+      </View>
       <View>
         {/* <LineChart
           data={{
