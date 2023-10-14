@@ -73,7 +73,7 @@ const app = () => {
             Total Balance
           </Text>
 
-          <Text
+          <Textb
             style={{
               fontSize: 30,
               color: "white",
@@ -84,7 +84,7 @@ const app = () => {
             }}
           >
             $501,200.52
-          </Text>
+          </Textb>
           <View
             style={{
               flexDirection: "row",
