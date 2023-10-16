@@ -7,7 +7,7 @@ import { LineChart } from "react-native-wagmi-charts";
 // import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
 import { router, useSearchParams, useLocalSearchParams } from "expo-router";
-
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
 const coinDetails = () => {
   const data = [
     {
@@ -121,8 +121,8 @@ const coinDetails = () => {
         >
           <Svg
             viewBox="0 0 24 24"
-            height={45}
-            width={45}
+            height={30}
+            width={30}
             xmlns="http://www.w3.org/2000/svg"
           >
             <Path
@@ -145,6 +145,9 @@ const coinDetails = () => {
         >
           $ {3 * params.current_price}
         </Text>
+        <VictoryChart width={350}>
+          <VictoryBar data={data} x="quarter" y="earnings" />
+        </VictoryChart>
         {/* <LineChart.Provider data={data}>
           <LineChart>
             <LineChart.Path />
