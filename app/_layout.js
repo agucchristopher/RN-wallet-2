@@ -1,7 +1,8 @@
 import { Stack, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
 import LottieView from "lottie-react-native";
-import { ActivityIndicator, Dimensions, View } from "react-native";
+import { ActivityIndicator, Dimensions, LogBox, View } from "react-native";
+import { useEffect } from "react";
 export default () => {
   const [fontsLoaded] = useFonts({
     RBold: require("../assets/fonts/Raleway-Bold.ttf"),
@@ -9,6 +10,9 @@ export default () => {
     RRegular: require("../assets/fonts/Raleway-Regular.ttf"),
     SRegular: require("../assets/fonts/Ubuntu-Medium.ttf"),
   });
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
   if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

@@ -39,7 +39,8 @@
     "react-native-web": "~0.19.6",
     "victory-native": "^40.0.2",
     "@shopify/react-native-skia": "0.1.196",
-    "expo-updates": "~0.18.16"
+    "expo-updates": "~0.18.16",
+    "expo-dev-client": "~2.4.11"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

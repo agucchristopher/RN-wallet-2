@@ -7,8 +7,17 @@ import { LineChart } from "react-native-wagmi-charts";
 // import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
 import { router, useSearchParams, useLocalSearchParams } from "expo-router";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import {
+  CartesianChart,
+  Line,
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+} from "victory-native";
+import { Circle } from "@shopify/react-native-skia";
 const coinDetails = () => {
+  const { state, isActive } = useChartPressState({ x: 0, y: { highTmp: 0 } });
+
   const data = [
     {
       timestamp: 1625945400000,
@@ -53,7 +62,14 @@ const coinDetails = () => {
       console.error("Error fetching data:", error);
     }
   };
+  function ToolTip({ x, y }) {
+    return <Circle cx={x} cy={y} r={8} color="black" />;
+  }
 
+  const DATA = Array.from({ length: 31 }, (_, i) => ({
+    day: i,
+    highTmp: 40 + 30 * Math.random(),
+  }));
   React.useEffect(() => {
     fetchData().then((data) => {
       setChartData(data); // Assuming data structure matches what your LineChart expects
@@ -145,15 +161,26 @@ const coinDetails = () => {
         >
           $ {3 * params.current_price}
         </Text>
-        <VictoryChart width={350}>
-          <VictoryBar data={data} x="quarter" y="earnings" />
-        </VictoryChart>
-        {/* <LineChart.Provider data={data}>
-          <LineChart>
-            <LineChart.Path />
-            <LineChart.CursorLine />
-          </LineChart>
-        </LineChart.Provider> */}
+        <View style={{ backgroundColor: "white" }}>
+          <CartesianChart
+            data={DATA}
+            xKey="day"
+            yKeys={["highTmp"]}
+            // axisOptions={{
+            //   font,
+            // }}
+            chartPressState={state}
+          >
+            {({ points }) => (
+              <>
+                <Line points={points.highTmp} color="red" strokeWidth={3} />
+                {isActive && (
+                  <ToolTip x={state.x.position} y={state.y.highTmp.position} />
+                )}
+              </>
+            )}
+          </CartesianChart>
+        </View>
       </View>
       <View>
         {/* <LineChart
