@@ -13,24 +13,24 @@ export default () => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
-  if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <LottieView
-          resizeMode="contain"
-          autoPlay
-          style={{
-            width: 150,
-            height: 150,
-            alignSelf: "center",
-            justifyContent: "center",
-          }}
-          // Find more Lottie files at https://lottiefiles.com/featured
-          source={require("../assets/animation_lnlqmxc0.json")}
-        />
-      </View>
-    );
-  }
+  // if (!fontsLoaded) {
+  //   return (
+  //     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+  //       <LottieView
+  //         resizeMode="contain"
+  //         autoPlay
+  //         style={{
+  //           width: 200,
+  //           height: 200,
+  //           alignSelf: "center",
+  //           justifyContent: "center",
+  //         }}
+  //         // Find more Lottie files at https://lottiefiles.com/featured
+  //         source={require("../assets/animation_lnlqmxc0.json")}
+  //       />
+  //     </View>
+  //   );
+  // }
   return (
     <Stack
       screenOptions={{

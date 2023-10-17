@@ -13,8 +13,10 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
+  useChartPressState,
 } from "victory-native";
 import { Circle } from "@shopify/react-native-skia";
+import Chart from "../components/chart";
 const coinDetails = () => {
   const { state, isActive } = useChartPressState({ x: 0, y: { highTmp: 0 } });
 
@@ -50,7 +52,33 @@ const coinDetails = () => {
   ];
 
   const [chartData, setChartData] = React.useState(null);
+  const [currentPrice, setCurrentPrice] = React.useState(0);
   let params = useLocalSearchParams();
+
+  async function getInitialPrice(coinId) {
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+      );
+      return response.data[coinId].usd;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  async function getCurrentPrice(coinId) {
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+      );
+      setCurrentPrice(response.data[coinId].usd);
+      return response.data[coinId].usd;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -63,14 +91,30 @@ const coinDetails = () => {
     }
   };
   function ToolTip({ x, y }) {
-    return <Circle cx={x} cy={y} r={8} color="black" />;
+    return <Circle cx={x} cy={y} r={8} color="white" />;
   }
 
   const DATA = Array.from({ length: 31 }, (_, i) => ({
     day: i,
     highTmp: 40 + 30 * Math.random(),
   }));
-  React.useEffect(() => {
+  React.useEffect(async () => {
+    const coinId = "bitcoin"; // Replace with the actual coin ID
+    const initialPrice = await getInitialPrice(`${params.id}`);
+    const currentPrice = await getCurrentPrice(`${params.id}`);
+    const percentageChange =
+      ((currentPrice - initialPrice) / initialPrice) * 100;
+
+    if (percentageChange > 0) {
+      console.log(`The price went up by ${percentageChange.toFixed(2)}%`);
+    } else if (percentageChange < 0) {
+      console.log(
+        `The price went down by ${Math.abs(percentageChange).toFixed(2)}%`
+      );
+    } else {
+      console.log(`The price remained the same`);
+    }
+
     fetchData().then((data) => {
       setChartData(data); // Assuming data structure matches what your LineChart expects
     });
@@ -127,12 +171,13 @@ const coinDetails = () => {
           style={{
             justifyContent: "center",
             alignSelf: "flex-end",
-            display: "flex",
+            // display: "flex",
             height: 50,
             width: 50,
             backgroundColor: "#1d1d1d",
             borderRadius: 15,
-            padding: 5,
+            // padding: 5,
+            alignContent: "center",
           }}
         >
           <Svg
@@ -140,6 +185,7 @@ const coinDetails = () => {
             height={30}
             width={30}
             xmlns="http://www.w3.org/2000/svg"
+            style={{ alignSelf: "center" }}
           >
             <Path
               fill="red"
@@ -159,11 +205,20 @@ const coinDetails = () => {
             fontFamily: "SRegular",
           }}
         >
-          $ {3 * params.current_price}
+          $ {currentPrice}
         </Text>
-        <View style={{ backgroundColor: "white" }}>
+        <View
+          style={{
+            backgroundColor: "#1d1d1d",
+            height: 200,
+            borderRadius: 10,
+            margin: 5,
+          }}
+        >
+          {/* <Chart /> */}
           <CartesianChart
             data={DATA}
+            // chartType="area"
             xKey="day"
             yKeys={["highTmp"]}
             // axisOptions={{
@@ -173,7 +228,7 @@ const coinDetails = () => {
           >
             {({ points }) => (
               <>
-                <Line points={points.highTmp} color="red" strokeWidth={3} />
+                <Line points={points.highTmp} color="green" strokeWidth={3} />
                 {isActive && (
                   <ToolTip x={state.x.position} y={state.y.highTmp.position} />
                 )}
@@ -182,51 +237,46 @@ const coinDetails = () => {
           </CartesianChart>
         </View>
       </View>
-      <View>
-        {/* <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
-              },
-            ],
-          }}
-          width={Dimensions.get("window").width * 0.8} // from react-native
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundColor: "#e26a00",
-            backgroundGradientFrom: "#fb8c00",
-            backgroundGradientTo: "#ffa726",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#ffa726",
-            },
-          }}
-          bezier
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          flexDirection: "row",
+          alignSelf: "center",
+          margin: 15,
+          padding: 5,
+        }}
+      >
+        <TouchableOpacity
           style={{
-            marginVertical: 8,
-            borderRadius: 16,
-            width: Dimensions.get("screen").width * 0.8,
+            height: 60,
+            backgroundColor: "green",
+            margin: 5,
+            width: Dimensions.get("screen").width * 0.48,
+            borderRadius: 5,
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        /> */}
+        >
+          <Text style={{ color: "white", fontFamily: "RMedium", fontSize: 18 }}>
+            Buy
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            height: 60,
+            backgroundColor: "crimson",
+            margin: 5,
+            width: Dimensions.get("screen").width * 0.48,
+            borderRadius: 5,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ color: "white", fontFamily: "RMedium", fontSize: 18 }}>
+            Sell
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -239,5 +289,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#121212",
     flex: 1,
     padding: 15,
+    marginTop: 0.5,
   },
 });
