@@ -47,11 +47,11 @@ export const getWatchlistedCoins = async (pageNumber = 1, coinIds) => {
 export const getAllCoins = async () => {
   try {
     const response = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/list?include_platform=false`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h&locale=en`
     );
     return response.data;
   } catch (e) {
-    console.error(e);
+    console.error("Failed getting coins ", e);
   }
 };
 

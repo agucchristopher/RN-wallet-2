@@ -18,12 +18,18 @@ import Animated, {
   SlideInLeft,
   ZoomIn,
 } from "react-native-reanimated";
-
+import { useState, useEffect } from "react";
+import { getAllCoins } from "../services";
 const app = () => {
   function addCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-
+  let [loadedCoins, setloadedCoins] = useState([]);
+  useEffect(async () => {
+    let allCoins = await getAllCoins();
+    console.log(allCoins);
+    setloadedCoins(allCoins);
+  }, []);
   return (
     <ScrollView style={styles.container}>
       <Text
@@ -192,7 +198,7 @@ const app = () => {
         My Assets
       </Text>
       <FlatList
-        data={coins}
+        data={loadedCoins}
         renderItem={({ item }) => {
           let percentageColor =
             item.price_change_percentage_24h < 0
@@ -262,11 +268,11 @@ const app = () => {
                   <View
                     style={{
                       backgroundColor: percentageColor,
-                      // paddingHorizontal: 3,
+                      marginHorizontal: 3,
                       // paddingVertical: 8,
                       borderRadius: 5,
                       flexDirection: "row",
-                      width: 25,
+                      width: 65,
                       alignContent: "center",
                       justifyContent: "center",
                       padding: 5,
@@ -284,10 +290,12 @@ const app = () => {
                       color={"white"}
                       style={{ alignSelf: "center" }}
                     />
-                  </View>{" "}
-                  {addCommas(
-                    `${Math.abs(item.price_change_percentage_24h)?.toFixed(2)}%`
-                  )}
+                    {addCommas(
+                      `${Math.abs(item.price_change_percentage_24h)?.toFixed(
+                        2
+                      )}%`
+                    )}
+                  </View>
                 </Text>
               </View>
             </TouchableOpacity>
