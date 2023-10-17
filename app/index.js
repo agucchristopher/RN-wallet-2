@@ -198,7 +198,7 @@ const app = () => {
         My Assets
       </Text>
       <FlatList
-        data={coins}
+        data={loadedCoins}
         renderItem={({ item }) => {
           let percentageColor =
             item.price_change_percentage_24h < 0
