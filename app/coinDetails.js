@@ -200,36 +200,48 @@ const coinDetails = () => {
       </View>
 
       <View>
-        <Text
-          style={{
-            color: "white",
-            margin: 10,
-            textAlign: "center",
-            fontSize: 30,
-            fontFamily: "SRegular",
-          }}
-        >
-          $ {addCommas(currentPrice)}
-        </Text>
         <View
           style={{
-            backgroundColor: percentageColor,
-            paddingHorizontal: 3,
-            paddingVertical: 8,
-            borderRadius: 5,
             flexDirection: "row",
-            width: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            height: 60,
           }}
         >
-          <AntDesign
-            name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
-            size={12}
-            color={"white"}
-            style={{ alignSelf: "center", marginRight: 5 }}
-          />
-          <Text style={styles.priceChange}>
-            {price_change_percentage_24h?.toFixed(2)}%
+          <Text
+            style={{
+              color: "white",
+              margin: 10,
+              textAlign: "center",
+              fontSize: 30,
+              fontFamily: "SRegular",
+            }}
+          >
+            $ {addCommas(currentPrice)}
           </Text>
+          <View
+            style={{
+              backgroundColor: percentageColor,
+              // paddingHorizontal: 3,
+              // paddingVertical: 8,
+              borderRadius: 5,
+              flexDirection: "row",
+              width: 30,
+              alignContent: "center",
+              justifyContent: "center",
+              padding: 5,
+            }}
+          >
+            <AntDesign
+              name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
+              size={16}
+              color={"white"}
+              style={{ alignSelf: "center", marginRight: 0 }}
+            />
+          </View>
+          {/* <Text style={styles.priceChange}>
+              {price_change_percentage_24h?.toFixed(2)}%
+            </Text> */}
         </View>
         <View
           style={{
