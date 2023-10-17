@@ -198,7 +198,7 @@ const app = () => {
         My Assets
       </Text>
       <FlatList
-        data={loadedCoins}
+        data={coins}
         renderItem={({ item }) => {
           let percentageColor =
             item.price_change_percentage_24h < 0
@@ -272,12 +272,13 @@ const app = () => {
                       // paddingVertical: 8,
                       borderRadius: 5,
                       flexDirection: "row",
-                      width: 65,
+                      width: 70,
                       alignContent: "center",
                       justifyContent: "center",
-                      padding: 5,
+                      padding: 2.5,
                       gap: 5,
                       margin: 5,
+                      height: 20,
                     }}
                   >
                     <AntDesign
@@ -286,15 +287,23 @@ const app = () => {
                           ? "caretdown"
                           : "caretup"
                       }
-                      size={14}
+                      size={10}
                       color={"white"}
                       style={{ alignSelf: "center" }}
                     />
-                    {addCommas(
-                      `${Math.abs(item.price_change_percentage_24h)?.toFixed(
-                        2
-                      )}%`
-                    )}
+                    <Text
+                      style={{
+                        color: "white",
+                        fontFamily: "SRegular",
+                        fontSize: 14,
+                      }}
+                    >
+                      {addCommas(
+                        `${Math.abs(item.price_change_percentage_24h)?.toFixed(
+                          2
+                        )}%`
+                      )}
+                    </Text>
                   </View>
                 </Text>
               </View>

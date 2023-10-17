@@ -295,7 +295,7 @@ const coinDetails = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "white", fontFamily: "RMedium", fontSize: 18 }}>
+          <Text style={{ color: "white", fontFamily: "RBold", fontSize: 18 }}>
             Buy
           </Text>
         </TouchableOpacity>
@@ -310,7 +310,7 @@ const coinDetails = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "white", fontFamily: "RMedium", fontSize: 18 }}>
+          <Text style={{ color: "white", fontFamily: "RBold", fontSize: 18 }}>
             Sell
           </Text>
         </TouchableOpacity>
