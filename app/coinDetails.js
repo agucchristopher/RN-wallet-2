@@ -93,13 +93,9 @@ const coinDetails = () => {
       );
       console.log(response.data);
       setPriceChangePercentage_24h(
-        response.data.market_data.market_cap_change_percentage_24h_in_currency
-          .usd
+        response.data.market_data.price_change_percentage_24h
       );
-      console.log(
-        response.data.market_data.market_cap_change_percentage_24h_in_currency
-          .usd
-      );
+      console.log(response.data.market_data.price_change_percentage_24h);
       // return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
