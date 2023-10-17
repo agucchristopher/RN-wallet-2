@@ -14,8 +14,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.devkay.WalletApp"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -41,9 +40,7 @@
         "projectId": "a16b1034-8b04-4e44-b8d7-bd80d2e7d3f2"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "49.0.13",
     "updates": {
       "url": "https://u.expo.dev/a16b1034-8b04-4e44-b8d7-bd80d2e7d3f2"
     }
