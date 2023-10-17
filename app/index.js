@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { Image } from "react-native";
@@ -193,6 +194,10 @@ const app = () => {
       <FlatList
         data={coins}
         renderItem={({ item }) => {
+          let percentageColor =
+            item.price_change_percentage_24h < 0
+              ? "#ea3943"
+              : "#16c784" || "white";
           return (
             <TouchableOpacity
               style={{
@@ -231,7 +236,7 @@ const app = () => {
                   </Text>
                 </View>
               </View>
-              <View>
+              <View style={{ margin: 5 }}>
                 <Text
                   style={{
                     color: "white",
@@ -241,18 +246,48 @@ const app = () => {
                     fontSize: 18,
                   }}
                 >
-                  3 {addCommas(`${(" ", item.symbol)}`.toUpperCase())}
+                  $ {addCommas(`${(" ", item.current_price)}`.toUpperCase())}
                 </Text>
                 <Text
                   style={{
-                    color: "white",
+                    color: percentageColor,
                     fontFamily: "SRegular",
                     display: "flex",
                     alignSelf: "flex-end",
                     fontSize: 18,
+                    gap: 5,
+                    alignItems: "center",
                   }}
                 >
-                  ${addCommas(`${Math.floor(item.current_price) * 3}`)}
+                  <View
+                    style={{
+                      backgroundColor: percentageColor,
+                      // paddingHorizontal: 3,
+                      // paddingVertical: 8,
+                      borderRadius: 5,
+                      flexDirection: "row",
+                      width: 25,
+                      alignContent: "center",
+                      justifyContent: "center",
+                      padding: 5,
+                      gap: 5,
+                      margin: 5,
+                    }}
+                  >
+                    <AntDesign
+                      name={
+                        item.price_change_percentage_24h < 0
+                          ? "caretdown"
+                          : "caretup"
+                      }
+                      size={14}
+                      color={"white"}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </View>{" "}
+                  {addCommas(
+                    `${Math.abs(item.price_change_percentage_24h)?.toFixed(2)}%`
+                  )}
                 </Text>
               </View>
             </TouchableOpacity>

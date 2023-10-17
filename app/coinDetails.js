@@ -222,22 +222,23 @@ const coinDetails = () => {
               // paddingVertical: 8,
               borderRadius: 5,
               flexDirection: "row",
-              width: 30,
+              width: 80,
               alignContent: "center",
               justifyContent: "center",
               padding: 5,
+              gap: 5,
             }}
           >
             <AntDesign
               name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
               size={16}
               color={"white"}
-              style={{ alignSelf: "center", marginRight: 0 }}
+              style={{ alignSelf: "center" }}
             />
-          </View>
-          {/* <Text style={styles.priceChange}>
+            <Text style={{ fontFamily: "SRegular", color: "white" }}>
               {price_change_percentage_24h?.toFixed(2)}%
-            </Text> */}
+            </Text>
+          </View>
         </View>
         <View
           style={{
@@ -260,7 +261,11 @@ const coinDetails = () => {
           >
             {({ points }) => (
               <>
-                <Line points={points.highTmp} color="green" strokeWidth={3} />
+                <Line
+                  points={points.highTmp}
+                  color={percentageColor}
+                  strokeWidth={3}
+                />
                 {isActive && (
                   <ToolTip x={state.x.position} y={state.y.highTmp.position} />
                 )}
