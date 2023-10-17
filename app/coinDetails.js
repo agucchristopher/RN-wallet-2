@@ -17,7 +17,11 @@ import {
 } from "victory-native";
 import { Circle } from "@shopify/react-native-skia";
 import Chart from "../components/chart";
+import { AntDesign } from "@expo/vector-icons";
 const coinDetails = () => {
+  function addCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   const { state, isActive } = useChartPressState({ x: 0, y: { highTmp: 0 } });
 
   const data = [
@@ -53,8 +57,11 @@ const coinDetails = () => {
 
   const [chartData, setChartData] = React.useState(null);
   const [currentPrice, setCurrentPrice] = React.useState(0);
+  const [price_change_percentage_24h, setPriceChangePercentage_24h] =
+    React.useState();
   let params = useLocalSearchParams();
-
+  const percentageColor =
+    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784" || "white";
   async function getInitialPrice(coinId) {
     try {
       const response = await axios.get(
@@ -72,7 +79,7 @@ const coinDetails = () => {
         `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
       );
       setCurrentPrice(response.data[coinId].usd);
-      return response.data[coinId].usd;
+      // return response.market_data[coinId].usd;
     } catch (error) {
       console.error(error);
       throw error;
@@ -82,10 +89,18 @@ const coinDetails = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${params.name}&vs_currencies=usd`
+        `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=false&community_data=false&developer_data=false`
       );
       console.log(response.data);
-      return response.data;
+      setPriceChangePercentage_24h(
+        response.data.market_data.market_cap_change_percentage_24h_in_currency
+          .usd
+      );
+      console.log(
+        response.data.market_data.market_cap_change_percentage_24h_in_currency
+          .usd
+      );
+      // return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -102,22 +117,11 @@ const coinDetails = () => {
     const coinId = "bitcoin"; // Replace with the actual coin ID
     const initialPrice = await getInitialPrice(`${params.id}`);
     const currentPrice = await getCurrentPrice(`${params.id}`);
-    const percentageChange =
-      ((currentPrice - initialPrice) / initialPrice) * 100;
-
-    if (percentageChange > 0) {
-      console.log(`The price went up by ${percentageChange.toFixed(2)}%`);
-    } else if (percentageChange < 0) {
-      console.log(
-        `The price went down by ${Math.abs(percentageChange).toFixed(2)}%`
-      );
-    } else {
-      console.log(`The price remained the same`);
-    }
 
     fetchData().then((data) => {
       setChartData(data); // Assuming data structure matches what your LineChart expects
     });
+    console.log(price_change_percentage_24h);
   }, []);
 
   return (
@@ -205,8 +209,28 @@ const coinDetails = () => {
             fontFamily: "SRegular",
           }}
         >
-          $ {currentPrice}
+          $ {addCommas(currentPrice)}
         </Text>
+        <View
+          style={{
+            backgroundColor: percentageColor,
+            paddingHorizontal: 3,
+            paddingVertical: 8,
+            borderRadius: 5,
+            flexDirection: "row",
+            width: 50,
+          }}
+        >
+          <AntDesign
+            name={price_change_percentage_24h < 0 ? "caretdown" : "caretup"}
+            size={12}
+            color={"white"}
+            style={{ alignSelf: "center", marginRight: 5 }}
+          />
+          <Text style={styles.priceChange}>
+            {price_change_percentage_24h?.toFixed(2)}%
+          </Text>
+        </View>
         <View
           style={{
             backgroundColor: "#1d1d1d",
@@ -243,8 +267,8 @@ const coinDetails = () => {
           bottom: 0,
           flexDirection: "row",
           alignSelf: "center",
-          margin: 15,
-          padding: 5,
+          margin: 10,
+          padding: 10,
         }}
       >
         <TouchableOpacity
@@ -252,7 +276,7 @@ const coinDetails = () => {
             height: 60,
             backgroundColor: "green",
             margin: 5,
-            width: Dimensions.get("screen").width * 0.48,
+            width: Dimensions.get("screen").width * 0.46,
             borderRadius: 5,
             alignItems: "center",
             justifyContent: "center",
@@ -267,7 +291,7 @@ const coinDetails = () => {
             height: 60,
             backgroundColor: "crimson",
             margin: 5,
-            width: Dimensions.get("screen").width * 0.48,
+            width: Dimensions.get("screen").width * 0.46,
             borderRadius: 5,
             alignItems: "center",
             justifyContent: "center",
@@ -289,6 +313,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#121212",
     flex: 1,
     padding: 15,
-    marginTop: 0.5,
+    marginTop: 0.1,
   },
 });
