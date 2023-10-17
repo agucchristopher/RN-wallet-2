@@ -27,7 +27,7 @@ const app = () => {
   let [loadedCoins, setloadedCoins] = useState([]);
   useEffect(async () => {
     let allCoins = await getAllCoins();
-    console.log(allCoins);
+    // console.log(allCoins);
     setloadedCoins(allCoins);
   }, []);
   return (

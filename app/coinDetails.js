@@ -91,7 +91,7 @@ const coinDetails = () => {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=false&community_data=false&developer_data=false`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setPriceChangePercentage_24h(
         response.data.market_data.price_change_percentage_24h
       );
