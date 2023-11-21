@@ -46,7 +46,7 @@ export const coins = [
     market_cap_change_24h: -1458808142.0059204,
     market_cap_change_percentage_24h: -0.7677,
     circulating_supply: 120250549.971242,
-    total_supply: 120250549.971242,
+    total_supply: 120250549.971247,
     max_supply: null,
     ath: 4878.26,
     ath_change_percentage: -67.86998,
